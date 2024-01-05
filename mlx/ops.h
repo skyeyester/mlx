@@ -1105,4 +1105,10 @@ array addmm(
     const float& beta = 1.f,
     StreamOrDevice s = {});
 
+/** Checkpoint a function such that to compute its gradient we run the function
+ * again and we don't have to keep all the intermediate states in memory. */
+array checkpoint(
+    std::function<array(const std::vector<array>&)> fun,
+    const std::vector<array>& args);
+
 } // namespace mlx::core
