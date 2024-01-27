@@ -1105,26 +1105,13 @@ array addmm(
     const float& beta = 1.f,
     StreamOrDevice s = {});
 
-/** Implements the identity function but allows injecting dependencies to other
- * arrays to ensure that they will be computed before anything that depends on
- * the inputs. */
+/**
+ * Implements the identity function but allows injecting dependencies to other
+ * arrays. This ensures that these other arrays will also have been computed
+ * when the outputs of this function are computed.
+ */
 std::vector<array> depends(
     const std::vector<array>& inputs,
     const std::vector<array>& dependencies);
-
-/** Allows to have call a function and define a custom VJP for it. */
-std::vector<array> custom_vjp(
-    std::function<std::vector<array>(const std::vector<array>&)> fun,
-    std::function<std::vector<array>(
-        const std::vector<array>&,
-        const std::vector<array>&,
-        const std::vector<array>&)> fun_vjp,
-    const std::vector<array>& args);
-
-/** Checkpoint a function such that to compute its gradient we run the function
- * again and we don't have to keep all the intermediate states in memory. */
-std::vector<array> checkpoint(
-    std::function<std::vector<array>(const std::vector<array>&)> fun,
-    const std::vector<array>& args);
 
 } // namespace mlx::core
